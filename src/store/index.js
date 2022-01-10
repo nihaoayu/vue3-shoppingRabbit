@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore, createLogger } from 'vuex'
 // 导入数据持久化插件
 import createPersistedstate from 'vuex-persistedstate'
 
@@ -21,6 +21,7 @@ export default createStore({
     createPersistedstate({
       key: 'vue3-githubrabbit',
       paths: ['user', 'cart']
-    })
+    }),
+    createLogger()
   ]
 })
