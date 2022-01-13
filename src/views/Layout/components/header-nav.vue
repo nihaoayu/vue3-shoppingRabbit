@@ -1,21 +1,28 @@
 <template>
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
-    <li v-for="item in list" :key="item.id">
-      <a href="#">{{ item.name }}</a>
-      <!-- hover 显示 start -->
-      <div class="layer">
-        <ul>
-          <li v-for="child in item.children" :key="child.id">
-            <a href="#">
-              <img :src="child.picture" alt="" />
-              <p>{{ child.name }}</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- hover 显示 end -->
-    </li>
+    <template v-if="$store.state.category.list.length > 0">
+      <li v-for="item in list" :key="item.id">
+        <a href="#">{{ item.name }}</a>
+        <!-- hover 显示 start -->
+        <div class="layer">
+          <ul>
+            <li v-for="child in item.children" :key="child.id">
+              <a href="#">
+                <img :src="child.picture" alt="" />
+                <p>{{ child.name }}</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- hover 显示 end -->
+      </li>
+    </template>
+    <template v-else>
+      <li v-for="item in 9" :key="item">
+        <XtxSkeleton :width="32" :height="22" bg="#ccc" />
+      </li>
+    </template>
   </ul>
 </template>
 
