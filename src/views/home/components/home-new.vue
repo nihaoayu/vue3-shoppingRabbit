@@ -1,5 +1,5 @@
 <template>
-  <HomePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
+  <HomePanel ref="target" title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
     <template #right>
       <xtx-more></xtx-more>
     </template>
@@ -21,6 +21,7 @@
 import HomePanel from './home-panel'
 import { findNew } from '@/api/home'
 import { ref } from 'vue'
+import { useObserver } from '@/hooks'
 export default {
   components: {
     HomePanel
@@ -32,8 +33,9 @@ export default {
       const res = await findNew()
       list.value = res
     }
-    getList()
+    const { target } = useObserver(getList)
     return {
+      target,
       list
     }
   }

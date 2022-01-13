@@ -1,5 +1,5 @@
 <template>
-  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
+  <HomePanel ref="target" title="人气推荐" sub-title="人气爆款 不容错过">
     <ul class="goods-list">
       <li v-for="item in goods" :key="item.id">
         <RouterLink to="/">
@@ -19,18 +19,20 @@
 import HomePanel from './home-panel'
 import { findHot } from '@/api/home'
 import { ref } from 'vue'
+import { useObserver } from '@/hooks'
 export default {
   name: 'HomeHot',
   components: { HomePanel },
   setup () {
     const goods = ref([])
+
     const getGoods = async () => {
       const res = await findHot()
       // console.log(res)
       goods.value = res
     }
-    getGoods()
-    return { goods }
+    const { target } = useObserver(getGoods)
+    return { target, goods }
   }
 }
 </script>
