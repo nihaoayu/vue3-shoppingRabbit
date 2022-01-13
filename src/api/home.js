@@ -20,3 +20,11 @@ export const findBanner = () => {
 export const findNew = () => {
   return request('home/new', 'get')
 }
+/**
+ * @description: 获取人气推荐
+ * @param {*}
+ * @return {*}
+ */
+export const findHot = () => {
+  return request('home/hot', 'get')
+}

@@ -5,6 +5,8 @@
     <HomeBanner />
     <!-- 新鲜好物 -->
     <HomeNew />
+    <!-- 人气推荐 -->
+    <HomeHot />
   </div>
 </template>
 
@@ -12,12 +14,14 @@
 import HomeBanner from './components/home-banner'
 import HomeCategory from './components/home-category'
 import HomeNew from './components/home-new'
+import HomeHot from './components/home-hot'
 export default {
   name: 'xtx-home-page',
   components: {
     HomeBanner,
     HomeCategory,
-    HomeNew
+    HomeNew,
+    HomeHot
   }
 }
 </script>
