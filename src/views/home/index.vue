@@ -11,7 +11,7 @@ export default {
 <style scoped lang='less'>
 // 手动引入less样式
 // @import "~@/styles/variables.less";
-.xtx-home-page {
-  color: @warnColor;
-}
+// .xtx-home-page {
+//   color: @warnColor;
+// }
 </style>
