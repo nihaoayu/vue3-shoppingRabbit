@@ -1,5 +1,6 @@
 import Skeleton from './Skeleton/index.vue'
-const cps = [Skeleton]
+import Slider from './Slider/index.vue'
+const cps = [Skeleton, Slider]
 export default {
   install (app) {
     cps.forEach(item => {

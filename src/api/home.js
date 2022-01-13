@@ -4,3 +4,11 @@ import request from '@/utils/request'
 export const findGateGoryList = () => {
   return request('/home/category/head', 'get')
 }
+/**
+ * @description: 获取banner图
+ * @param {*}
+ * @return {*}
+ */
+export const findBanner = () => {
+  return request('home/banner', 'get')
+}

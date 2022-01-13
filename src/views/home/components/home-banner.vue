@@ -1,10 +1,23 @@
 <template>
-  <div class="home-banner">banner</div>
+  <div class="home-banner">
+    <XtxSlider :data="data" autoPlay />
+  </div>
 </template>
 
 <script>
+import { findBanner } from '@/api/home'
+import { ref } from 'vue'
 export default {
-  name: 'HomeBanner'
+  name: 'HomeBanner',
+  setup () {
+    const data = ref([])
+    const getData = async () => {
+      const res = await findBanner()
+      data.value = res
+    }
+    getData()
+    return { data }
+  }
 }
 </script>
 
