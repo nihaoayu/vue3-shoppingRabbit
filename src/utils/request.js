@@ -18,7 +18,7 @@ instance.interceptors.request.use(config => {
 // 处理返回数据 token失效跳回到登录页
 instance.interceptors.response.use(
   (response) => {
-    return response.data
+    return response.data.result
   },
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -28,3 +28,11 @@ instance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+export default function request (url, method, data) {
+  return instance({
+    url,
+    method,
+    [method === 'get' ? 'params' : 'data']: data
+  })
+}

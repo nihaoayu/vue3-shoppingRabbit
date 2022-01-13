@@ -1,38 +1,35 @@
 <template>
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
-    <li>
-      <a href="#">美食</a>
+    <li v-for="item in list" :key="item.id">
+      <a href="#">{{ item.name }}</a>
       <!-- hover 显示 start -->
       <div class="layer">
         <ul>
-          <li v-for="i in 10" :key="i">
+          <li v-for="child in item.children" :key="child.id">
             <a href="#">
-              <img
-                src="http://zhoushugang.gitee.io/erabbit-client-pc-static/uploads/img/category%20(4).png"
-                alt=""
-              />
-              <p>果干</p>
+              <img :src="child.picture" alt="" />
+              <p>{{ child.name }}</p>
             </a>
           </li>
         </ul>
       </div>
       <!-- hover 显示 end -->
     </li>
-    <li><a href="#">餐厨</a></li>
-    <li><a href="#">艺术</a></li>
-    <li><a href="#">电器</a></li>
-    <li><a href="#">居家</a></li>
-    <li><a href="#">洗护</a></li>
-    <li><a href="#">孕婴</a></li>
-    <li><a href="#">服装</a></li>
-    <li><a href="#">杂货</a></li>
   </ul>
 </template>
 
 <script>
+import { useStore, mapState } from 'vuex'
 export default {
-  name: 'AppHeaderNav'
+  name: 'AppHeaderNav',
+  computed: {
+    ...mapState('category', ['list'])
+  },
+  setup () {
+    const store = useStore()
+    store.dispatch('category/getList')
+  }
 }
 </script>
 
