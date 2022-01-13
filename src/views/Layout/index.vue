@@ -1,20 +1,24 @@
 <template>
   <!-- 头部导航栏组件 -->
   <XtxTopNav />
-  <header>头部</header>
+  <Header />
   <main>
     <!-- 二级路由出口 -->
     <router-view></router-view>
   </main>
-  <footer>底部</footer>
+  <XtxFooter />
 </template>
 
 <script>
 import XtxTopNav from './components/topnav'
+import Header from './components/header'
+import XtxFooter from './components/footer'
 export default {
   name: 'xtx-layout',
   components: {
-    XtxTopNav
+    XtxTopNav,
+    Header,
+    XtxFooter
   }
 }
 </script>
