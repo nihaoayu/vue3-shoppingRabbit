@@ -8,4 +8,9 @@ export default {
 }
 </script>
 
-<style scoped lang='less'></style>
+<style scoped lang='less'>
+@import "~@/styles/variables.less";
+.xtx-home-page {
+  color: @warnColor;
+}
+</style>
