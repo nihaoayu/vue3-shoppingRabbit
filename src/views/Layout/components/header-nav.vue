@@ -27,16 +27,13 @@
 </template>
 
 <script>
-import { useStore, mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'AppHeaderNav',
   computed: {
     ...mapState('category', ['list'])
-  },
-  setup () {
-    const store = useStore()
-    store.dispatch('category/getList')
   }
+
 }
 </script>
 

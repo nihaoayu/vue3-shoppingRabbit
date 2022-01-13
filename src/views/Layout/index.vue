@@ -16,6 +16,7 @@ import XtxTopNav from './components/topnav'
 import Header from './components/header'
 import XtxFooter from './components/footer'
 import HeaderSticky from './components/header-sticky'
+import { useStore } from 'vuex'
 export default {
   name: 'xtx-layout',
   components: {
@@ -23,6 +24,10 @@ export default {
     Header,
     XtxFooter,
     HeaderSticky
+  },
+  setup () {
+    const store = useStore()
+    store.dispatch('category/getList')
   }
 }
 </script>
