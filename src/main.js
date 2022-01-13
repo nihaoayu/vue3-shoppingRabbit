@@ -5,5 +5,6 @@ import store from './store'
 // 引入重置样式的文件
 import 'normalize.css'
 import '@/styles/common.less'
-
-createApp(App).use(store).use(router).mount('#app')
+// 引入全局组件
+import componentPlugin from '@/components'
+createApp(App).use(store).use(router).use(componentPlugin).mount('#app')

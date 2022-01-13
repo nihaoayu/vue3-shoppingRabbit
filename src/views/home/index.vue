@@ -1,10 +1,19 @@
 <template>
-  <div class="xtx-home-page">首页</div>
+  <div class="container">
+    <HomeCategory />
+    <HomeBanner />
+  </div>
 </template>
 
 <script>
+import HomeBanner from './components/home-banner'
+import HomeCategory from './components/home-category'
 export default {
-  name: 'xtx-home-page'
+  name: 'xtx-home-page',
+  components: {
+    HomeBanner,
+    HomeCategory
+  }
 }
 </script>
 
