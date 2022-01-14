@@ -1,7 +1,23 @@
 <template>
   <div class="goods-image">
-    <div class="middle">
+    <div
+      class="large"
+      v-if="!isOutside"
+      :style="[
+        {
+          backgroundImage: `url(${good[imgIndex]})`,
+          backgroundPosition: `${bg.x}px ${bg.y}px`,
+        },
+      ]"
+    ></div>
+    <div class="middle" ref="target">
       <img :src="good[imgIndex]" alt="" />
+      <!-- 蒙层区 -->
+      <div
+        class="layer"
+        :style="{ left: left + 'px', top: top + 'px' }"
+        v-if="!isOutside"
+      ></div>
     </div>
     <ul class="small">
       <li
@@ -16,7 +32,8 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useMouseInElement } from '@vueuse/core'
 export default {
   name: 'GoodsImage',
   props: {
@@ -27,7 +44,32 @@ export default {
   },
   setup () {
     const imgIndex = ref(0)
-    return { imgIndex }
+    const target = ref(null)
+
+    const { elementX, elementY, isOutside } = useMouseInElement(target)
+    const left = ref(0)
+    const top = ref(0)
+    const bg = ref({ x: 0, y: 0 })
+    watch([elementX, elementY], () => {
+      if (elementX.value < 100) {
+        left.value = 0
+      } else if (elementX.value > 300) {
+        left.value = 200
+      } else {
+        left.value = elementX.value - 100
+      }
+      if (elementY.value < 100) {
+        top.value = 0
+      } else if (elementY.value > 300) {
+        top.value = 200
+      } else {
+        top.value = elementY.value - 100
+      }
+      bg.value.x = -left.value * 2
+      bg.value.y = -top.value * 2
+    })
+
+    return { bg, top, left, imgIndex, isOutside, target, elementX, elementY }
   }
 }
 </script>
@@ -37,10 +79,30 @@ export default {
   height: 400px;
   position: relative;
   display: flex;
+  .large {
+    position: absolute;
+    top: 0;
+    left: 412px;
+    width: 400px;
+    height: 400px;
+    z-index: 500;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-repeat: no-repeat;
+    background-size: 800px 800px;
+    background-color: #f8f8f8;
+  }
   .middle {
     width: 400px;
     height: 400px;
     background: #f5f5f5;
+    .layer {
+      width: 200px;
+      height: 200px;
+      background: rgba(0, 0, 0, 0.2);
+      left: 0;
+      top: 0;
+      position: absolute;
+    }
   }
   .small {
     width: 80px;

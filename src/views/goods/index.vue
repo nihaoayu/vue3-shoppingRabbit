@@ -11,6 +11,7 @@
       <!-- 商品信息 -->
       <div class="goods-info">
         <!-- 新增结构 -->
+
         <!-- 图片预览区 -->
         <div class="media">
           <GoodsImg :good="goodsList.mainPictures" />
@@ -61,6 +62,7 @@ export default {
   min-height: 600px;
   background: #fff;
   display: flex;
+
   // 新增样式
   .media {
     width: 580px;
