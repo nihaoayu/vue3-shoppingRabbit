@@ -15,9 +15,12 @@
         <!-- 图片预览区 -->
         <div class="media">
           <GoodsImg :good="goodsList.mainPictures" />
+          <GoodSales />
         </div>
         <!-- 商品信息区 -->
-        <div class="spec"></div>
+        <div class="spec">
+          <GoodName />
+        </div>
       </div>
       <!-- 商品详情 -->
       <div class="goods-footer">
@@ -35,16 +38,21 @@
 
 <script>
 import { findGoods } from '@/api/goods'
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
 import { useRoute } from 'vue-router'
 import GoodsImg from './components/goods-image'
+import GoodSales from './components/goods-sales'
+import GoodName from './components/goods-name'
 export default {
   name: 'XtxGoodsPage',
   components: {
-    GoodsImg
+    GoodsImg,
+    GoodSales,
+    GoodName
   },
   setup () {
     const goodsList = ref([])
+    provide('goods', goodsList)
     const route = useRoute()
     const getGoodsList = async () => {
       const res = await findGoods(route.params.id)
