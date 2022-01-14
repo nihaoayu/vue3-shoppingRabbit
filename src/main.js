@@ -5,6 +5,8 @@ import store from './store'
 // 引入重置样式的文件
 import 'normalize.css'
 import '@/styles/common.less'
+// 引入全局自定义指令
+import directivePlugin from '@/directives'
 // 引入全局组件
 import componentPlugin from '@/components'
-createApp(App).use(store).use(router).use(componentPlugin).mount('#app')
+createApp(App).use(store).use(router).use(componentPlugin).use(directivePlugin).mount('#app')
