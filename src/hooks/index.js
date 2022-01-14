@@ -9,6 +9,10 @@ export const useObserver = (getFn) => {
         getFn()
         stop()
       }
+    },
+    {
+      // 加快数据请求的速度
+      threshold: 0
     }
   )
   return { target }
