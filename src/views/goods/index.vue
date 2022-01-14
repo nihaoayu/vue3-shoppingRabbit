@@ -27,7 +27,11 @@
         <div class="goods-article">
           <div class="goods-tabs">
             <!-- 详情图片列表 -->
-            <img />
+            <img
+              v-for="item in goodsList.details.pictures"
+              :key="item"
+              v-imglazy="item"
+            />
           </div>
         </div>
         <div class="goods-aside"></div>
