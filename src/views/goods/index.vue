@@ -24,6 +24,8 @@
           <GoodsSku :goods="goodsList" @change="getSku" />
           <!-- 数量 -->
           <XtxNumbox :max="goodsList.inventory" v-model="buyNum" />
+          <!-- 按钮组件 -->
+          <XtxButton size="middle" type="primary"> 添加购物车 </XtxButton>
         </div>
       </div>
       <!-- 商品详情 -->
