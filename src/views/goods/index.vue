@@ -20,6 +20,8 @@
         <!-- 商品信息区 -->
         <div class="spec">
           <GoodName />
+          <!-- 新增 sku -->
+          <GoodsSku :goods="goodsList" @change="getSku" />
         </div>
       </div>
       <!-- 商品详情 -->
@@ -63,8 +65,15 @@ export default {
       console.log(res)
       goodsList.value = res
     }
+    const getSku = (sku) => {
+      if (sku.skuId) {
+        goodsList.value.price = sku.price
+        goodsList.value.oldPrice = sku.oldPrice
+        goodsList.value.inventory = sku.inventory
+      }
+    }
     getGoodsList()
-    return { goodsList }
+    return { goodsList, getSku }
   }
 }
 </script>
