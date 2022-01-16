@@ -23,7 +23,7 @@
           <!-- 新增 sku -->
           <GoodsSku :goods="goodsList" @change="getSku" />
           <!-- 数量 -->
-          <XtxNumbox :max="goodsList.inventory" />
+          <XtxNumbox :max="goodsList.inventory" v-model="buyNum" />
         </div>
       </div>
       <!-- 商品详情 -->
@@ -59,6 +59,7 @@ export default {
     GoodName
   },
   setup () {
+    const buyNum = ref(1)
     const goodsList = ref([])
     provide('goods', goodsList)
     const route = useRoute()
@@ -75,7 +76,7 @@ export default {
       }
     }
     getGoodsList()
-    return { goodsList, getSku }
+    return { goodsList, getSku, buyNum }
   }
 }
 </script>

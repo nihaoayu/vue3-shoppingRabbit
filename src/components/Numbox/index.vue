@@ -9,10 +9,12 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 export default {
   name: 'XtxNumbox',
+  emits: ['update:modelValue'],
   props: {
+    modelValue: Number,
     min: {
       type: Number,
       default: 1
@@ -22,16 +24,21 @@ export default {
       default: 10
     }
   },
-  setup (props) {
-    const num = ref(10)
+  setup (props, { emit }) {
+    const num = ref(1)
     const sub = () => {
       if (num.value === props.min) return
       num.value--
+      emit('update:modelValue', num.value)
     }
     const add = () => {
       if (num.value === props.max) return
       num.value++
+      emit('update:modelValue', num.value)
     }
+    watch(() => props.modelValue, (newValue) => {
+      num.value = newValue
+    }, { immediate: true })
     return { num, sub, add }
   }
 }
