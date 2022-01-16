@@ -1,18 +1,36 @@
 <template>
   <div class="account-box">
-    <div class="form">
+    <Form class="form" :validation-schema="rules" v-slot="{ errors }">
       <div class="form-item">
         <div class="input">
           <i class="iconfont icon-user"></i>
-          <input type="text" placeholder="请输入用户名或手机号" />
+          <Field
+            type="text"
+            v-model="form.account"
+            name="account"
+            placeholder="请输入用户名或手机号"
+            :class="{ error: errors.account }"
+          />
         </div>
         <!-- 表单验证错误信息提示 -->
-        <!-- <div class="error"><i class="iconfont icon-warning" />请输入手机号</div> -->
+        <div class="error" v-if="errors.account">
+          <i class="iconfont icon-warning" />{{ errors.account }}
+        </div>
       </div>
       <div class="form-item">
         <div class="input">
           <i class="iconfont icon-lock"></i>
-          <input type="password" placeholder="请输入密码" />
+          <Field
+            v-model="form.password"
+            name="password"
+            type="password"
+            placeholder="请输入密码"
+            :class="{ error: errors.password }"
+          />
+        </div>
+        <!-- 表单验证错误信息提示 -->
+        <div class="error" v-if="errors.password">
+          <i class="iconfont icon-warning" />{{ errors.password }}
         </div>
       </div>
       <div class="form-item">
@@ -25,7 +43,7 @@
         </div>
       </div>
       <a href="javascript:;" class="btn">登录</a>
-    </div>
+    </Form>
     <div class="action">
       <img
         src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png"
@@ -38,7 +56,29 @@
     </div>
   </div>
 </template>
-
+<script>
+import { Form, Field } from 'vee-validate'
+import { ref } from 'vue'
+import validate from '@/utils/validate'
+export default {
+  name: 'XtxLoginForm',
+  components: {
+    Form,
+    Field
+  },
+  setup () {
+    const form = ref({
+      account: '',
+      password: ''
+    })
+    const rules = {
+      account: validate.account,
+      password: validate.password
+    }
+    return { form, rules }
+  }
+}
+</script>
 <style lang="less" scoped>
 // 账号容器
 .account-box {
