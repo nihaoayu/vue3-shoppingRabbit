@@ -1,6 +1,6 @@
 <template>
   <div class="account-box">
-    <Form class="form" :validation-schema="rules" v-slot="{ errors }">
+    <Form ref="fm" class="form" :validation-schema="rules" v-slot="{ errors }">
       <!-- <p>{{ errors }}</p> -->
       <div class="form-item">
         <div class="input">
@@ -49,7 +49,7 @@
           <i class="iconfont icon-warning" />{{ errors.isAgree }}
         </div>
       </div>
-      <a href="javascript:;" class="btn">登录</a>
+      <a href="javascript:;" class="btn" @click="login">登录</a>
     </Form>
     <div class="action">
       <img
@@ -84,7 +84,12 @@ export default {
       password: validate.password,
       isAgree: validate.isAgree
     }
-    return { form, rules }
+    const fm = ref()
+    const login = async () => {
+      const { valid } = await fm.value.validate()
+      console.log(valid)
+    }
+    return { form, rules, login, fm }
   }
 }
 </script>
