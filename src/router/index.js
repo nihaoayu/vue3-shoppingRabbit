@@ -28,7 +28,13 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  // 每次跳转页面的另一个页面都会在顶部
+  scrollBehavior () {
+    return {
+      left: 0, top: 0
+    }
+  }
 })
 
 export default router
