@@ -1,6 +1,7 @@
 <template>
   <div class="account-box">
     <Form class="form" :validation-schema="rules" v-slot="{ errors }">
+      <!-- <p>{{ errors }}</p> -->
       <div class="form-item">
         <div class="input">
           <i class="iconfont icon-user"></i>
@@ -35,11 +36,17 @@
       </div>
       <div class="form-item">
         <div class="agree">
-          <XtxCheckBox />
-          <span>我已同意</span>
+          <Field as="XtxCheckBox" v-model="form.isAgree" name="isAgree">
+            <span>我已同意</span>
+          </Field>
+          <!-- <XtxCheckBox /> -->
           <a href="javascript:;">《隐私条款》</a>
           <span>和</span>
           <a href="javascript:;">《服务条款》</a>
+        </div>
+        <!-- 表单验证错误信息提示 -->
+        <div class="error" v-if="errors.isAgree">
+          <i class="iconfont icon-warning" />{{ errors.isAgree }}
         </div>
       </div>
       <a href="javascript:;" class="btn">登录</a>
@@ -69,11 +76,13 @@ export default {
   setup () {
     const form = ref({
       account: '',
-      password: ''
+      password: '',
+      isAgree: false
     })
     const rules = {
       account: validate.account,
-      password: validate.password
+      password: validate.password,
+      isAgree: validate.isAgree
     }
     return { form, rules }
   }
