@@ -67,6 +67,9 @@
 import { Form, Field } from 'vee-validate'
 import { ref } from 'vue'
 import validate from '@/utils/validate'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import msg from '@/components/Message/index'
 export default {
   name: 'XtxLoginForm',
   components: {
@@ -74,6 +77,8 @@ export default {
     Field
   },
   setup () {
+    const store = useStore()
+    const router = useRouter()
     const form = ref({
       account: '',
       password: '',
@@ -87,7 +92,16 @@ export default {
     const fm = ref()
     const login = async () => {
       const { valid } = await fm.value.validate()
-      console.log(valid)
+      if (valid) {
+        try {
+          await store.dispatch('user/updateProfile', form.value)
+          msg({ type: 'success', text: '登陆成功' })
+          router.push('/')
+        } catch (error) {
+          // console.dir(error.response.data.message)
+          msg({ type: 'error', text: error.response.data.message })
+        }
+      }
     }
     return { form, rules, login, fm }
   }
