@@ -10,7 +10,7 @@
               >{{ profile.nickname || profile.account }}</a
             >
           </li>
-          <li><a href="javascript:;">退出登录</a></li>
+          <li><a href="javascript:;" @click="logout">退出登录</a></li>
         </template>
         <!-- 未登录 -->
         <template v-else>
@@ -29,11 +29,21 @@
   </nav>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { useRouter } from 'vue-router'
+import { mapState, useStore } from 'vuex'
 export default {
   name: 'AppTopnav',
   computed: {
     ...mapState('user', ['profile'])
+  },
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const logout = () => {
+      store.commit('user/delProfile')
+      router.replace('/login')
+    }
+    return { logout }
   }
 }
 </script>
