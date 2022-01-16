@@ -22,6 +22,7 @@ instance.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
+      store.commit('user/delProfile')
       const redirectUrl = router.currentRoute.value.fullPath
       router.replace(`/login?redirectUrl=${redirectUrl}`)
     }
