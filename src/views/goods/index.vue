@@ -22,6 +22,8 @@
           <GoodName />
           <!-- 新增 sku -->
           <GoodsSku :goods="goodsList" @change="getSku" />
+          <!-- 数量 -->
+          <XtxNumbox :max="goodsList.inventory" />
         </div>
       </div>
       <!-- 商品详情 -->
