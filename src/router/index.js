@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 导入公共布局
 import Layout from '@/views/Layout'
 import Home from '@/views/home'
+import Login from '@/views/login'
 // 详情页
 import GoodsDetail from '@/views/goods/index.vue'
 const routes = [
@@ -18,6 +19,10 @@ const routes = [
         component: GoodsDetail
       }
     ]
+  },
+  {
+    path: '/login',
+    component: Login
   }
 ]
 
