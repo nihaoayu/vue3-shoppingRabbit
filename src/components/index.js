@@ -7,7 +7,8 @@ import City from './City/index'
 import Sku from './Sku/index'
 import Numbox from './Numbox/index'
 import Button from './Button/index'
-const cps = [Skeleton, Button, Numbox, Slider, More, Bread, BreadItem, City, Sku]
+import CheckBox from './CheckBox/index.vue'
+const cps = [Skeleton, CheckBox, Button, Numbox, Slider, More, Bread, BreadItem, City, Sku]
 export default {
   install (app) {
     cps.forEach(item => {
