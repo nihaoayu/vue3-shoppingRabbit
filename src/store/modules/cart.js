@@ -4,6 +4,24 @@ export default {
   state: () => ({
     list: []
   }),
+  getters: {
+    // 计算有效商品列表 isEffective = true  filter
+    vaildList (state) {
+      return state.list.filter(item => item.isEffective === true)
+    },
+    // 已选中列表 selected = true
+    vaildSelected (state, getters) {
+      return getters.effectiveList.filter(item => item.selected)
+    },
+    // 已选择列表总钱数  selectedList 中所有项的单价*数据进行叠加
+    vaildAllSelected (state, getters) {
+      return getters.selectedList.reduce((a, c) => a + c.count * c.nowPrice, 0)
+    },
+    // 全选：有效列表中的seleted字段全为true 才为true
+    isAll (state, getters) {
+      return getters.effectiveList.every(item => item.selected)
+    }
+  },
   mutations: {
     // 添加到购物车，存储到本地
     singelGood (state, good) {
