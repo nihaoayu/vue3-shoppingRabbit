@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/views/Layout'
 import Home from '@/views/home'
 import Login from '@/views/login'
+import Cart from '@/views/cart'
 // 详情页
 import GoodsDetail from '@/views/goods/index.vue'
 const routes = [
@@ -17,6 +18,10 @@ const routes = [
       {
         path: '/detail/:id',
         component: GoodsDetail
+      },
+      {
+        path: '/cart',
+        component: Cart
       }
     ]
   },

@@ -9,9 +9,9 @@
         <input type="text" placeholder="搜一搜" />
       </div>
       <div class="cart">
-        <a class="curr" href="#">
+        <router-link class="curr" to="/cart">
           <i class="iconfont icon-cart"></i><em>2</em>
-        </a>
+        </router-link>
       </div>
     </div>
   </header>
