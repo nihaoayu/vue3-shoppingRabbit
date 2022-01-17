@@ -11,15 +11,15 @@ export default {
     },
     // 已选中列表 selected = true
     vaildSelected (state, getters) {
-      return getters.effectiveList.filter(item => item.selected)
+      return getters.vaildList.filter(item => item.selected)
     },
     // 已选择列表总钱数  selectedList 中所有项的单价*数据进行叠加
     vaildAllSelected (state, getters) {
-      return getters.selectedList.reduce((a, c) => a + c.count * c.nowPrice, 0)
+      return getters.vaildSelected.reduce((a, c) => a + c.count * c.nowPrice, 0)
     },
     // 全选：有效列表中的seleted字段全为true 才为true
     isAll (state, getters) {
-      return getters.effectiveList.every(item => item.selected)
+      return getters.vaildList.every(item => item.selected)
     }
   },
   mutations: {

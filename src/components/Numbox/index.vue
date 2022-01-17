@@ -1,6 +1,6 @@
 <template>
   <div class="xtx-numbox">
-    <div class="label">数量</div>
+    <div class="label" v-if="isShowCount">数量</div>
     <div class="numbox">
       <a href="javascript:;" @click="sub">-</a>
       <input type="text" readonly :value="num" />
@@ -14,6 +14,10 @@ export default {
   name: 'XtxNumbox',
   emits: ['update:modelValue'],
   props: {
+    isShowCount: {
+      type: Boolean,
+      default: true
+    },
     modelValue: Number,
     min: {
       type: Number,

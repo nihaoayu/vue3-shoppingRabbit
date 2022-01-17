@@ -9,7 +9,9 @@
         <table>
           <thead>
             <tr>
-              <th width="120"><XtxCheckBox>全选</XtxCheckBox></th>
+              <th width="120">
+                <XtxCheckBox v-model="isAll">全选</XtxCheckBox>
+              </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
               <th width="180">数量</th>
@@ -19,31 +21,38 @@
           </thead>
           <!-- 有效商品 -->
           <tbody>
-            <tr v-for="i in 3" :key="i">
-              <td><XtxCheckBox /></td>
+            <tr v-for="good in vaildList" :key="good.skuId">
+              <td><XtxCheckBox v-model="good.selected" /></td>
               <td>
                 <div class="goods">
                   <RouterLink to="/"
-                    ><img
-                      src="https://yanxuan-item.nosdn.127.net/13ab302f8f2c954d873f03be36f8fb03.png"
-                      alt=""
+                    ><img :src="good.picture" alt=""
                   /></RouterLink>
                   <div>
                     <p class="name ellipsis">
-                      和手足干裂说拜拜 ingrams手足皲裂修复霜
+                      {{ good.name }}
                     </p>
                     <!-- 选择规格组件 -->
                   </div>
                 </div>
               </td>
               <td class="tc">
-                <p>&yen;200.00</p>
-                <p>比加入时降价 <span class="red">&yen;20.00</span></p>
+                <p>&yen;{{ good.nowPrice }}</p>
+                <p>
+                  比加入时降价
+                  <span class="red"
+                    >&yen;{{ (good.price - good.nowPrice).toFixed(2) }}</span
+                  >
+                </p>
               </td>
               <td class="tc">
-                <XtxNumbox />
+                <XtxNumbox :isShowCount="false" v-model="good.count" />
               </td>
-              <td class="tc"><p class="f16 red">&yen;200.00</p></td>
+              <td class="tc">
+                <p class="f16 red">
+                  &yen;{{ (good.nowPrice * good.count).toFixed(2) }}
+                </p>
+              </td>
               <td class="tc">
                 <p><a class="green" href="javascript:;">删除</a></p>
               </td>
@@ -54,8 +63,9 @@
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 7 件商品，已选择 2 件，商品合计：
-          <span class="red">¥400</span>
+          共 {{ vaildList.length }} 件商品，已选择
+          {{ vaildSelected.length }} 件，商品合计：
+          <span class="red">¥{{ vaildAllSelected }}</span>
         </div>
         <div class="total">
           <XtxButton type="primary">下单结算</XtxButton>
@@ -65,8 +75,12 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'XtxCartPage'
+  name: 'XtxCartPage',
+  computed: {
+    ...mapGetters('cart', ['vaildList', 'vaildSelected', 'vaildAllSelected', 'isAll'])
+  }
 }
 </script>
 <style scoped lang="less">
