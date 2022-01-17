@@ -36,6 +36,17 @@ export default {
     singelCheck (state, { good, isCheck }) {
       const currItem = state.list.find(item => item.skuId === good.skuId)
       currItem.selected = isCheck
+    },
+    // 全选
+    allCheck (state, isCheck) {
+      state.list.forEach(item => {
+        item.selected = isCheck
+      })
+    },
+    // 删除
+    deleteGood (state, good) {
+      const delIndex = state.list.findIndex(item => item.skuId === good.skuId)
+      state.list.splice(delIndex, 1)
     }
   },
   actions: {
@@ -47,11 +58,26 @@ export default {
         return '添加成功'
       }
     },
+    // 单选
     async singelCheckAction ({ commit, rootState }, { good, isCheck }) {
       if (rootState.user.profile.token) {
       } else {
         commit('singelCheck', { good, isCheck })
       }
+    },
+    // 多选
+    async allCheckAction ({ commit, rootState }, isCheck) {
+      if (rootState.user.profile.token) {
+      } else {
+        commit('allCheck', isCheck)
+      }
+    },
+    async deleteGoodAction ({ commit, rootState }, good) {
+      if (rootState.user.profile.token) {
+      } else {
+        commit('deleteGood', good)
+      }
     }
+
   }
 }

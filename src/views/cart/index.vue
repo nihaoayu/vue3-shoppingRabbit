@@ -10,7 +10,9 @@
           <thead>
             <tr>
               <th width="120">
-                <XtxCheckBox v-model="isAll">全选</XtxCheckBox>
+                <XtxCheckBox :modelValue="isAll" @update:modelValue="allCheck"
+                  >全选</XtxCheckBox
+                >
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -59,7 +61,11 @@
                 </p>
               </td>
               <td class="tc">
-                <p><a class="green" href="javascript:;">删除</a></p>
+                <p>
+                  <a class="green" href="javascript:;" @click="delGood(good)"
+                    >删除</a
+                  >
+                </p>
               </td>
             </tr>
           </tbody>
@@ -88,10 +94,19 @@ export default {
   },
   setup () {
     const store = useStore()
+    // 单选
     const singelCheck = (good, isCheck) => {
       store.dispatch('cart/singelCheckAction', { good, isCheck })
     }
-    return { singelCheck }
+    // 多选
+    const allCheck = (isCheck) => {
+      store.dispatch('cart/allCheckAction', isCheck)
+    }
+    // 删除
+    const delGood = good => {
+      store.dispatch('cart/deleteGoodAction', good)
+    }
+    return { singelCheck, delGood, allCheck }
   }
 }
 </script>
