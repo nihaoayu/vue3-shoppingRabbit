@@ -53,7 +53,11 @@
                 </p>
               </td>
               <td class="tc">
-                <XtxNumbox :isShowCount="false" v-model="good.count" />
+                <XtxNumbox
+                  :isShowCount="false"
+                  :modelValue="good.count"
+                  @update:modelValue="changeNum(good, $event)"
+                />
               </td>
               <td class="tc">
                 <p class="f16 red">
@@ -106,7 +110,11 @@ export default {
     const delGood = good => {
       store.dispatch('cart/deleteGoodAction', good)
     }
-    return { singelCheck, delGood, allCheck }
+    // 数量
+    const changeNum = (good, count) => {
+      store.dispatch('cart/changeCountAction', { good, count })
+    }
+    return { singelCheck, changeNum, delGood, allCheck }
   }
 }
 </script>

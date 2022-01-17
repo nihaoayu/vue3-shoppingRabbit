@@ -47,6 +47,11 @@ export default {
     deleteGood (state, good) {
       const delIndex = state.list.findIndex(item => item.skuId === good.skuId)
       state.list.splice(delIndex, 1)
+    },
+    // 数量
+    changeCount (state, { good, count }) {
+      const currGood = state.list.find(item => item.skuId === good.skuId)
+      currGood.count = count
     }
   },
   actions: {
@@ -72,10 +77,17 @@ export default {
         commit('allCheck', isCheck)
       }
     },
+    // 删除
     async deleteGoodAction ({ commit, rootState }, good) {
       if (rootState.user.profile.token) {
       } else {
         commit('deleteGood', good)
+      }
+    },
+    async changeCountAction ({ commit, rootState }, { good, count }) {
+      if (rootState.user.profile.token) {
+      } else {
+        commit('changeCount', { good, count })
       }
     }
 
