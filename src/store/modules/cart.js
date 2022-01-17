@@ -31,6 +31,11 @@ export default {
       } else {
         state.list.unshift(good)
       }
+    },
+    // 单选功能
+    singelCheck (state, { good, isCheck }) {
+      const currItem = state.list.find(item => item.skuId === good.skuId)
+      currItem.selected = isCheck
     }
   },
   actions: {
@@ -40,6 +45,12 @@ export default {
       } else {
         commit('singelGood', good)
         return '添加成功'
+      }
+    },
+    async singelCheckAction ({ commit, rootState }, { good, isCheck }) {
+      if (rootState.user.profile.token) {
+      } else {
+        commit('singelCheck', { good, isCheck })
       }
     }
   }

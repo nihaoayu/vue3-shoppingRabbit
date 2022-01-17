@@ -22,7 +22,12 @@
           <!-- 有效商品 -->
           <tbody>
             <tr v-for="good in vaildList" :key="good.skuId">
-              <td><XtxCheckBox v-model="good.selected" /></td>
+              <td>
+                <XtxCheckBox
+                  :modelValue="good.selected"
+                  @update:modelValue="singelCheck(good, $event)"
+                />
+              </td>
               <td>
                 <div class="goods">
                   <RouterLink to="/"
@@ -75,11 +80,18 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, useStore } from 'vuex'
 export default {
   name: 'XtxCartPage',
   computed: {
     ...mapGetters('cart', ['vaildList', 'vaildSelected', 'vaildAllSelected', 'isAll'])
+  },
+  setup () {
+    const store = useStore()
+    const singelCheck = (good, isCheck) => {
+      store.dispatch('cart/singelCheckAction', { good, isCheck })
+    }
+    return { singelCheck }
   }
 }
 </script>
