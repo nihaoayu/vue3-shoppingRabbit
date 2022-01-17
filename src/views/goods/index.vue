@@ -25,7 +25,12 @@
           <!-- 数量 -->
           <XtxNumbox :max="goodsList.inventory" v-model="buyNum" />
           <!-- 按钮组件 -->
-          <XtxButton style="margin-top: 20px" size="middle" type="primary">
+          <XtxButton
+            @click="addGoods"
+            style="margin-top: 20px"
+            size="middle"
+            type="primary"
+          >
             添加购物车
           </XtxButton>
         </div>
@@ -55,6 +60,8 @@ import { useRoute } from 'vue-router'
 import GoodsImg from './components/goods-image'
 import GoodSales from './components/goods-sales'
 import GoodName from './components/goods-name'
+import msg from '@/components/Message/index'
+import { useStore } from 'vuex'
 export default {
   name: 'XtxGoodsPage',
   components: {
@@ -72,15 +79,45 @@ export default {
       console.log(res)
       goodsList.value = res
     }
+    // 获取sku属性
     const getSku = (sku) => {
       if (sku.skuId) {
         goodsList.value.price = sku.price
         goodsList.value.oldPrice = sku.oldPrice
         goodsList.value.inventory = sku.inventory
+        currSku.value = sku
+      } else {
+        currSku.value = null
       }
     }
     getGoodsList()
-    return { goodsList, getSku, buyNum }
+    // 添加到购物车的sku属性
+    const currSku = ref(null)
+    const store = useStore()
+    const addGoods = async () => {
+      if (!currSku.value) {
+        return msg({ text: '请选择完整的商品规格' })
+      }
+      if (currSku.value.inventory === 0) {
+        return msg({ text: '此商品卖完了' })
+      }
+      const goods = {
+        id: goodsList.value.id,
+        name: goodsList.value.name,
+        picture: goodsList.value.mainPictures[0],
+        skuId: currSku.value.skuId,
+        price: currSku.value.oldPrice,
+        nowPrice: currSku.value.price,
+        attrsText: currSku.value.specsText,
+        stock: currSku.value.inventory,
+        selected: true,
+        isEffective: true,
+        count: buyNum.value
+      }
+      const res = await store.dispatch('cart/singelGoodAction', goods)
+      msg({ type: 'success', text: res })
+    }
+    return { goodsList, addGoods, getSku, buyNum }
   }
 }
 </script>
