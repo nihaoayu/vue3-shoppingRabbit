@@ -16,3 +16,12 @@ export const mergeLocalCart = (cartList) => {
 export const findCartList = () => {
   return request('/member/cart', 'get')
 }
+/**
+ * 加入购物车
+ * @param {String} skuId - 商品SKUID
+ * @param {Integer} count - 商品数量
+ * @returns Promise
+ */
+export const insertCart = ({ skuId, count }) => {
+  return request('/member/cart', 'post', { skuId, count })
+}

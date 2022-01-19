@@ -1,4 +1,4 @@
-import { mergeLocalCart, findCartList } from '@/api/cart'
+import { mergeLocalCart, findCartList, insertCart } from '@/api/cart'
 // 购物车状态
 export default {
   namespaced: true,
@@ -62,7 +62,7 @@ export default {
   actions: {
     // 合并购物车
     async margeCartAction ({ state, dispatch }) {
-      if (state.list.length) {
+      if (state.list.length > 0) {
         const cartList = state.list.map(({ skuId, selected, count }) => {
           return { skuId, selected, count }
         })
@@ -76,9 +76,11 @@ export default {
       commit('setList', res)
     },
     // 加入购物车
-    async singelGoodAction ({ commit, rootState }, good) {
+    async singelGoodAction ({ commit, rootState, dispatch }, good) {
       if (rootState.user.profile.token) {
-        console.log('登录')
+        await insertCart({ skuId: good.skuId, count: good.count })
+        dispatch('getCartAction')
+        return '添加成功'
       } else {
         commit('singelGood', good)
         return '添加成功'

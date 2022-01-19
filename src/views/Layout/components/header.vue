@@ -10,7 +10,7 @@
       </div>
       <div class="cart">
         <router-link class="curr" to="/cart">
-          <i class="iconfont icon-cart"></i><em>2</em>
+          <i class="iconfont icon-cart"></i><em>{{ vaildList.length }}</em>
         </router-link>
       </div>
     </div>
@@ -19,10 +19,14 @@
 
 <script>
 import HeaderNavs from './header-nav'
+import { mapGetters } from 'vuex'
 export default {
   name: 'AppHeader',
   components: {
     HeaderNavs
+  },
+  computed: {
+    ...mapGetters('cart', ['vaildList'])
   }
 }
 </script>
