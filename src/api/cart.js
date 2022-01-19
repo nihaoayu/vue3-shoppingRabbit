@@ -25,3 +25,11 @@ export const findCartList = () => {
 export const insertCart = ({ skuId, count }) => {
   return request('/member/cart', 'post', { skuId, count })
 }
+/**
+ * 删除商品（支持批量删除）
+ * @param {Array<string>} ids - skuId集合
+ * @returns Promise
+ */
+export const deleteCart = (ids) => {
+  return request('/member/cart', 'delete', { ids })
+}

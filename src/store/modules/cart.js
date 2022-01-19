@@ -1,4 +1,4 @@
-import { mergeLocalCart, findCartList, insertCart } from '@/api/cart'
+import { mergeLocalCart, findCartList, deleteCart, insertCart } from '@/api/cart'
 // 购物车状态
 export default {
   namespaced: true,
@@ -101,8 +101,10 @@ export default {
       }
     },
     // 删除
-    async deleteGoodAction ({ commit, rootState }, good) {
+    async deleteGoodAction ({ commit, rootState, dispatch }, good) {
       if (rootState.user.profile.token) {
+        await deleteCart([good.skuId])
+        dispatch('getCartAction')
       } else {
         commit('deleteGood', good)
       }
