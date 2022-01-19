@@ -97,6 +97,7 @@ export default {
         try {
           await store.dispatch('user/updateProfile', form.value)
           msg({ type: 'success', text: '登陆成功' })
+          store.dispatch('cart/margeCartAction')
           router.push(route.query.redirectUrl || '/')
         } catch (error) {
           // console.dir(error.response.data.message)

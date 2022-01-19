@@ -1,3 +1,4 @@
+import { mergeLocalCart, findCartList } from '@/api/cart'
 // 购物车状态
 export default {
   namespaced: true,
@@ -23,6 +24,10 @@ export default {
     }
   },
   mutations: {
+    // 设置列表属性
+    setList (state, list) {
+      state.list = list
+    },
     // 添加到购物车，存储到本地
     singelGood (state, good) {
       const goodIndex = state.list.findIndex(item => item.skuId === good.skuId)
@@ -55,6 +60,22 @@ export default {
     }
   },
   actions: {
+    // 合并购物车
+    async margeCartAction ({ state, dispatch }) {
+      if (state.list.length) {
+        const cartList = state.list.map(({ skuId, selected, count }) => {
+          return { skuId, selected, count }
+        })
+        await mergeLocalCart(cartList)
+        dispatch('getCartAction')
+      }
+    },
+    // 获取购物车列表
+    async getCartAction ({ state, commit }) {
+      const res = await findCartList()
+      commit('setList', res)
+    },
+    // 加入购物车
     async singelGoodAction ({ commit, rootState }, good) {
       if (rootState.user.profile.token) {
         console.log('登录')

@@ -41,6 +41,7 @@ export default {
     const router = useRouter()
     const logout = () => {
       store.commit('user/delProfile')
+      store.commit('cart/setList', [])
       router.replace('/login')
     }
     return { logout }
