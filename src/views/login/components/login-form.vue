@@ -99,6 +99,7 @@ export default {
           msg({ type: 'success', text: '登陆成功' })
           store.dispatch('cart/margeCartAction')
           router.push(route.query.redirectUrl || '/')
+          store.dispatch('cart/getCartAction')
         } catch (error) {
           // console.dir(error.response.data.message)
           msg({ type: 'error', text: error.response.data.message })
