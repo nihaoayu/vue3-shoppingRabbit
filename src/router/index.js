@@ -6,6 +6,7 @@ import Login from '@/views/login'
 import Cart from '@/views/cart'
 // 详情页
 import GoodsDetail from '@/views/goods/index.vue'
+const Oreder = () => import('@/views/Member/order/index.vue')
 const routes = [
   {
     path: '/',
@@ -22,6 +23,10 @@ const routes = [
       {
         path: '/cart',
         component: Cart
+      },
+      {
+        path: '/order',
+        component: Oreder
       }
     ]
   },

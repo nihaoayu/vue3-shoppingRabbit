@@ -83,7 +83,7 @@
           <span class="red">¥{{ vaildAllSelected }}</span>
         </div>
         <div class="total">
-          <XtxButton type="primary">下单结算</XtxButton>
+          <XtxButton type="primary" @click="goOrder">下单结算</XtxButton>
         </div>
       </div>
     </div>
@@ -91,6 +91,8 @@
 </template>
 <script>
 import { mapGetters, useStore } from 'vuex'
+import msg from '@/components/Message/index'
+import { useRouter } from 'vue-router'
 export default {
   name: 'XtxCartPage',
   computed: {
@@ -98,6 +100,7 @@ export default {
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
     // 单选
     const singelCheck = (good, isCheck) => {
       store.dispatch('cart/singelCheckAction', { good, isCheck })
@@ -114,7 +117,17 @@ export default {
     const changeNum = (good, count) => {
       store.dispatch('cart/changeCountAction', { good, count })
     }
-    return { singelCheck, changeNum, delGood, allCheck }
+    // 下单
+    const goOrder = () => {
+      if (!store.state.user.profile.token) {
+        return msg({ type: 'error', text: '请先登录' })
+      }
+      if (store.getters['cart/vaildSelected'].length === 0) {
+        return msg({ type: 'error', text: '请选择商品' })
+      }
+      router.push('/order')
+    }
+    return { singelCheck, goOrder, changeNum, delGood, allCheck }
   }
 }
 </script>
