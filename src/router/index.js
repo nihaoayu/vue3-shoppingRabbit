@@ -6,6 +6,7 @@ import Login from '@/views/login'
 import Cart from '@/views/cart'
 // 详情页
 import GoodsDetail from '@/views/goods/index.vue'
+const PayResult = () => import('@/views/Member/pay/result')
 const Oreder = () => import('@/views/Member/order/index.vue')
 const Pay = () => import('@/views/Member/pay')
 const routes = [
@@ -32,6 +33,10 @@ const routes = [
       {
         path: '/pay',
         component: Pay
+      },
+      {
+        path: '/pay/callback',
+        component: PayResult
       }
     ]
   },
