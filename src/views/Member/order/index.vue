@@ -103,7 +103,7 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <XtxButton type="primary">提交订单</XtxButton>
+          <XtxButton type="primary" @click="subOreder">提交订单</XtxButton>
         </div>
       </div>
     </div>
@@ -111,10 +111,15 @@
 </template>
 <script>
 import { ref } from 'vue'
-import { findCheckoutInfo } from '@/api/order'
+import { findCheckoutInfo, createOrder } from '@/api/order'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'XtxPayCheckoutPage',
   setup () {
+    const router = useRouter()
+    const store = useStore()
+    // 渲染列表
     const orderInfo = ref({})
     const getOrderInfo = async () => {
       const res = await findCheckoutInfo()
@@ -122,7 +127,24 @@ export default {
       orderInfo.value = res
     }
     getOrderInfo()
-    return { orderInfo }
+    // 提交订单
+
+    const subOreder = async () => {
+      const data = {
+        deliveryTimeType: 1,
+        payType: 1,
+        buyerMessage: '',
+        addressId: '1429265915203031042', // 地址id(测试)
+        goods: [] // {skuId, count}
+      }
+      data.goods = orderInfo.value.goods.map(({ skuId, count }) => {
+        return { skuId, count }
+      })
+      const res = await createOrder(data)
+      router.push(`/pay?id=${res.id}`)
+      store.dispatch('cart/getCartAction')
+    }
+    return { orderInfo, subOreder }
   }
 }
 </script>
