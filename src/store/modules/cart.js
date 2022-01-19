@@ -1,4 +1,4 @@
-import { mergeLocalCart, findCartList, deleteCart, insertCart } from '@/api/cart'
+import { mergeLocalCart, findCartList, deleteCart, insertCart, updateCart, checkAllCart } from '@/api/cart'
 // 购物车状态
 export default {
   namespaced: true,
@@ -87,15 +87,20 @@ export default {
       }
     },
     // 单选
-    async singelCheckAction ({ commit, rootState }, { good, isCheck }) {
+    async singelCheckAction ({ commit, rootState, dispatch }, { good, isCheck }) {
       if (rootState.user.profile.token) {
+        await updateCart({ ...good, selected: isCheck })
+        dispatch('getCartAction')
       } else {
         commit('singelCheck', { good, isCheck })
       }
     },
     // 多选
-    async allCheckAction ({ commit, rootState }, isCheck) {
+    async allCheckAction ({ commit, rootState, getters, dispatch }, isCheck) {
       if (rootState.user.profile.token) {
+        const ids = getters.vaildList.map(item => item.skuId)
+        await checkAllCart({ selected: isCheck, ids })
+        dispatch('getCartAction')
       } else {
         commit('allCheck', isCheck)
       }
@@ -109,8 +114,11 @@ export default {
         commit('deleteGood', good)
       }
     },
-    async changeCountAction ({ commit, rootState }, { good, count }) {
+    // 数量
+    async changeCountAction ({ commit, rootState, dispatch }, { good, count }) {
       if (rootState.user.profile.token) {
+        await updateCart({ ...good, count })
+        dispatch('getCartAction')
       } else {
         commit('changeCount', { good, count })
       }
