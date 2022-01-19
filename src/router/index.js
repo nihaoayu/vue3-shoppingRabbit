@@ -7,6 +7,7 @@ import Cart from '@/views/cart'
 // 详情页
 import GoodsDetail from '@/views/goods/index.vue'
 const Oreder = () => import('@/views/Member/order/index.vue')
+const Pay = () => import('@/views/Member/pay')
 const routes = [
   {
     path: '/',
@@ -27,6 +28,10 @@ const routes = [
       {
         path: '/order',
         component: Oreder
+      },
+      {
+        path: '/pay',
+        component: Pay
       }
     ]
   },
